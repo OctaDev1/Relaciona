@@ -46,8 +46,8 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/email/{email}")
-	public ResponseEntity<List<Usuario>> getAllByEmail(String email){
-		return ResponseEntity.ok(usuarioRepository.findAllByEmailContainingIgnoreCase(email));
+	public ResponseEntity<List<Usuario>> getByEmail(String email){
+		return ResponseEntity.ok(usuarioRepository.findByEmailContainingIgnoreCase(email));
 	}
 	
 	@PostMapping("/cadastrar")
