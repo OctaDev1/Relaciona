@@ -35,8 +35,13 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuarioRepository.findAll());
 	}
 	
-	@GetMapping("/descricao/{descricao}")
-	public ResponseEntity<List<Usuario>> getAllByDescricao(String nome){
+	@GetMapping("/{id}")
+	public ResponseEntity<Optional<Usuario>> getById(Long id){
+		return ResponseEntity.ok(usuarioRepository.findById(id));
+	}
+	
+	@GetMapping("/nome/{nome}")
+	public ResponseEntity<List<Usuario>> getAllByNome(String nome){
 		return ResponseEntity.ok(usuarioRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 	
