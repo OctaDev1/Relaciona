@@ -22,8 +22,8 @@ public class Cliente {
 	private Long id;
 	
 	@NotBlank(message = "O campo Nome Completo não pode ficar vazio!")
-	@Size(min = 10, max = 255, message = "O Nome completo deve conter entre 10 a 255 caracteres!")
-	@Column(name = "nomeCompleto", nullable = false)
+	@Size(min = 10, max = 150, message = "O Nome completo deve conter entre 10 a 150 caracteres!")
+	@Column(name = "nomeCompleto", nullable = false, length = 100)
 	private String nomeCompleto;
 
 	@Email
