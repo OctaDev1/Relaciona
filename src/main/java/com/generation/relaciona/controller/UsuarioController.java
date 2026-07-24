@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,12 +39,12 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/nome/{nome}")
-	public ResponseEntity<List<Usuario>> getAllByNome(String nome){
+	public ResponseEntity<List<Usuario>> getAllByNome(@PathVariable String nome){
 		return ResponseEntity.ok(usuarioRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 	
 	@GetMapping("/email/{email}")
-	public ResponseEntity<List<Usuario>> getByEmail(String email){
+	public ResponseEntity<List<Usuario>> getByEmail(@PathVariable String email){
 		return ResponseEntity.ok(usuarioRepository.findByEmailContainingIgnoreCase(email));
 	}
 	
