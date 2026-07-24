@@ -1,7 +1,9 @@
 package com.generation.relaciona.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+
+import org.hibernate.annotations.Changelog.Timestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -20,7 +22,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity
-@Table(name = "tb_usuarios")
+@Table(name = "tb_usuario")
 public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -56,7 +58,8 @@ public class Usuario {
 	@NotBlank(message = "O atributo 'dataCadastro' é obrigatório!")
 	@Size(min = 8, max = 25, message = "A data deve ter entre 4 e 25 caracteres.")
 	@Column(length = 25)
-	private Date dataCadastro;
+	@Timestamp
+	private LocalDate dataCadastro;
 	
 	/* para quando oportunidade existir:
 	 * @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade =
@@ -122,11 +125,11 @@ public class Usuario {
 		this.status = status;
 	}
 
-	public Date getDataCadastro() {
+	public LocalDate getDataCadastro() {
 		return dataCadastro;
 	}
 
-	public void setDataCadastro(Date dataCadastro) {
+	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
 	
