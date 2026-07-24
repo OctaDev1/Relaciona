@@ -3,7 +3,7 @@ package com.generation.relaciona.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.annotations.Changelog.Timestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -56,7 +56,7 @@ public class Usuario {
 	private boolean status;
 	
 	@NotNull(message = "O atributo 'dataCadastro' é obrigatório!")
-	@Timestamp
+	@UpdateTimestamp
 	private LocalDate dataCadastro;
 	
 	/* para quando oportunidade existir:
