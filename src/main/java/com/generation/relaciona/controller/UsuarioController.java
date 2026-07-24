@@ -45,6 +45,11 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuarioRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 	
+	@GetMapping("/email/{email}")
+	public ResponseEntity<List<Usuario>> getAllByEmail(String email){
+		return ResponseEntity.ok(usuarioRepository.findAllByEmailContainingIgnoreCase(email));
+	}
+	
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario){
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
