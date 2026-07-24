@@ -55,9 +55,7 @@ public class Usuario {
 	@NotNull(message = "O atributo 'status' precisa ser true ou false.")
 	private boolean status;
 	
-	@NotBlank(message = "O atributo 'dataCadastro' é obrigatório!")
-	@Size(min = 8, max = 25, message = "A data deve ter entre 4 e 25 caracteres.")
-	@Column(length = 25)
+	@NotNull(message = "O atributo 'dataCadastro' é obrigatório!")
 	@Timestamp
 	private LocalDate dataCadastro;
 	
