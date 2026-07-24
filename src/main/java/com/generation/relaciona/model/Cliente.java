@@ -28,6 +28,7 @@ public class Cliente {
 
 	@Email
 	@NotBlank(message = "O campo email não pode estar vazio!")
+	@Size(min = 5, max = 255, message = "O e-mail deve ter entre 5 e 255 caracteres.")
 	private String email;
 
 	public Long getId() {
