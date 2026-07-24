@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,6 +47,12 @@ public class ClienteController {
         return ResponseEntity.status (HttpStatus.CREATED)
                 .body(clienteRepository.save(cliente));
     }
-
+	
+	 @PutMapping
+	    public ResponseEntity<Cliente>put(@RequestBody Cliente cliente){
+	        if (clienteRepository.existsById (cliente.getId ()))
+	            return ResponseEntity.ok (clienteRepository.save (cliente));
+	        return ResponseEntity.notFound ().build ();
+	    }
 
 }
