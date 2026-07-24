@@ -1,15 +1,21 @@
 package com.generation.relaciona.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.hibernate.validator.constraints.br.CNPJ;
 import org.hibernate.validator.constraints.br.CPF;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -39,18 +45,23 @@ public class Cliente {
 	@CPF
 	@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato 000.000.000-00")
 	private String cpf;
-	
+
 	@CNPJ(message = "O CNPJ informado é inválido!")
 	@Column(name = "cnpj", nullable = true)
 	private String cnpj;
-	
+
 	@NotBlank(message = "O campo Tipo de Pessoa não pode ficar vazio! Escolha entre Pessoa Física ou Juridica")
 	@Column(name = "tipoPessoa")
 	private String tipoPessoa;
-	
+
 	@NotNull(message = "O campo data de Nascimento não pode ficar vazio! Escreva no formato YYYY-MM-DD")
 	@Column(name = "dataNascimento")
-	private LocalDate dataNascimento; 
+	private LocalDate dataNascimento;
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.REMOVE)
+
+	@JsonIgnoreProperties(value = "cliente", allowSetters = true)
+	private List<Oportunidade> oportunidades;
 
 	public Long getId() {
 		return id;
@@ -107,6 +118,13 @@ public class Cliente {
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
-	
+
+	public List<Oportunidade> getOportunidades() {
+		return oportunidades;
+	}
+
+	public void setOportunidades(List<Oportunidade> oportunidades) {
+		this.oportunidades = oportunidades;
+	}
 
 }

@@ -27,45 +27,42 @@ public class Usuario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank(message = "O atributo 'nome' é obrigatório!")
 	@Column(length = 255)
 	private String nome;
-	
+
 	@NotBlank(message = "O atributo 'email' é obrigatório!")
 	@Email(message = "O atributo 'email' deve ser um email válido!")
 	@Size(min = 10, max = 255, message = "O email deve ter entre 10 e 255 caracteres.")
 	@Column(length = 255)
 	private String email;
-	
+
 	@NotBlank(message = "O atributo 'senha' é obrigatório!")
 	@Size(min = 8, max = 255, message = "A senha deve ter no mínimo 8 caracteres.")
 	@Column(length = 255)
 	private String senha;
-	
+
 	@Size(max = 5000, message = "O link da foto não pode ser maior do que 5000 caracteres.")
 	@Column(length = 5000)
 	private String foto;
-	
+
 	@NotBlank(message = "O atributo 'cargo' é obrigatório!")
 	@Size(min = 8, max = 25, message = "O cargo deve ter entre 4 e 25 caracteres.")
 	@Column(length = 25)
 	private String cargo;
-	
+
 	@NotNull(message = "O atributo 'status' precisa ser true ou false.")
 	private boolean status;
-	
+
 	@NotNull(message = "O atributo 'dataCadastro' é obrigatório!")
 	@UpdateTimestamp
 	private LocalDate dataCadastro;
-	
-	/* para quando oportunidade existir:
-	 * @OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade =
-	 * CascadeType.REMOVE)
-	 * 
-	 * @JsonIgnoreProperties(value = "usuario", allowSetters = true) private
-	 * List<Oportunidade> oportunidade;
-	 */
+
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
+
+	@JsonIgnoreProperties(value = "usuario", allowSetters = true)
+	private List<Oportunidade> oportunidades;
 
 	public Long getId() {
 		return id;
@@ -130,13 +127,14 @@ public class Usuario {
 	public void setDataCadastro(LocalDate dataCadastro) {
 		this.dataCadastro = dataCadastro;
 	}
-	
-	//para quando oportunidade existir:
-	/*public List<Oportunidade> getOportunidade() {
-		return oportunidade;
+
+	public List<Oportunidade> getOportunidades() {
+		return oportunidades;
 	}
 
-	public void setOportunidade(List<Oportunidade> oportunidade) {
-		this.oportunidade = oportunidade;
-	}*/
+	public void setOportunidades(List<Oportunidade> oportunidades) {
+		this.oportunidades = oportunidades;
+	}
+
+
 }
