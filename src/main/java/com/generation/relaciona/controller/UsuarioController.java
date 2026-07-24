@@ -45,27 +45,16 @@ public class UsuarioController {
 		return ResponseEntity.ok(usuarioRepository.findAllByNomeContainingIgnoreCase(nome));
 	}
 	
-	@PostMapping
+	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> post(@Valid @RequestBody Usuario usuario){
 		return ResponseEntity.status(HttpStatus.CREATED).body(usuarioRepository.save(usuario));
 	}
 	
-	@PutMapping
+	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> put(@Valid @RequestBody Usuario usuario){
 		if(usuarioRepository.existsById(usuario.getId())) {
 			return ResponseEntity.ok(usuarioRepository.save(usuario));
 		}
 		throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Este usuario não existe.", null);
-	}
-	
-	@ResponseStatus(HttpStatus.NO_CONTENT)
-	@DeleteMapping("/{id}")
-	public void delete(@PathVariable Long id) {
-		Optional<Usuario> usuario = usuarioRepository.findById(id);
-		
-		if(usuario.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-		}
-		usuarioRepository.deleteById(id);
 	}
 }
