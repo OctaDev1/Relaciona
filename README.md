@@ -111,7 +111,7 @@ A seguir estão as tabelas utilizadas no sistema.
 *Adicionar imagem do DER aqui.*
 
 ```markdown
-![Tabela Cliente][Tabela Oportunidade][Tabela Usuario](https://cdn.discordapp.com/attachments/1509621329492447330/1530267678608986112/modeloPI2_2.png?ex=6a684015&is=6a66ee95&hm=692ff56c715ffcd5e01ff6ee04b5a575534cf9b509f5cc5fc2ccaf1096003c9b&)
+![Tabela Cliente][Tabela Oportunidade][Tabela Usuario](https://cdn.discordapp.com/attachments/1509621329492447330/1530267678608986112/modeloPI2_2.png)
 ```
 
 ---
