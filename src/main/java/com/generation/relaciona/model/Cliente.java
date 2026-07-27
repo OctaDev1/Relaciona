@@ -11,6 +11,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -26,6 +28,11 @@ import jakarta.validation.constraints.Size;
 @Entity
 @Table(name = "tb_cliente")
 public class Cliente {
+	
+	public enum TipoPessoa{
+		Fisica,
+		Juridica
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,26 +40,29 @@ public class Cliente {
 
 	@NotBlank(message = "O campo Nome Completo não pode ficar vazio!")
 	@Size(min = 10, max = 150, message = "O Nome completo deve conter entre 10 a 150 caracteres!")
-	@Column(name = "nomeCompleto", nullable = false, length = 100)
+	@Column(name = "nomeCompleto", nullable = false, length = 150)
 	private String nomeCompleto;
 
 	@Email
 	@NotBlank(message = "O campo email não pode estar vazio!")
 	@Size(min = 5, max = 255, message = "O e-mail deve ter entre 5 e 255 caracteres.")
+	@Column(name = "email" ,unique = true)
 	private String email;
 
-	@NotBlank(message = "O campo CPF não pode ficar vazio!")
 	@CPF
 	@Pattern(regexp = "\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}", message = "CPF deve estar no formato 000.000.000-00")
+	@Column(name = "cpf", unique = true, nullable = true)
 	private String cpf;
 
-	@CNPJ(message = "O CNPJ informado é inválido!")
-	@Column(name = "cnpj", nullable = true)
+	@CNPJ(message = "CNPJ informado é invalido")
+	@Pattern(regexp = "\\d{2}\\.\\d{3}\\.\\d{3}/\\d{4}-\\d{2}", message = "CNPJ deve estar no formato 00.000.000/0000-00")
+	@Column(name = "cnpj", nullable = true, unique = true)
 	private String cnpj;
 
-	@NotBlank(message = "O campo Tipo de Pessoa não pode ficar vazio! Escolha entre Pessoa Física ou Juridica")
+	@Enumerated(EnumType.STRING)
+	@NotNull(message = "O tipo de pessoa é obrigatório! Escolha entre física e juridica!")
 	@Column(name = "tipoPessoa")
-	private String tipoPessoa;
+	private TipoPessoa tipoPessoa;
 
 	@NotNull(message = "O campo data de Nascimento não pode ficar vazio! Escreva no formato YYYY-MM-DD")
 	@Column(name = "dataNascimento")
@@ -60,7 +70,7 @@ public class Cliente {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.REMOVE)
 
-	@JsonIgnoreProperties(value = "cliente", allowSetters = true)
+	@JsonIgnoreProperties(value = "clientes", allowSetters = true)
 	private List<Oportunidade> oportunidades;
 
 	public Long getId() {
@@ -103,11 +113,12 @@ public class Cliente {
 		this.cnpj = cnpj;
 	}
 
-	public String getTipoPessoa() {
+
+	public TipoPessoa getTipoPessoa() {
 		return tipoPessoa;
 	}
 
-	public void setTipoPessoa(String tipoPessoa) {
+	public void setTipoPessoa(TipoPessoa tipoPessoa) {
 		this.tipoPessoa = tipoPessoa;
 	}
 

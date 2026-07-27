@@ -3,7 +3,7 @@ package com.generation.relaciona.model;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -52,11 +52,8 @@ public class Usuario {
 	@Column(length = 25)
 	private String cargo;
 
-	@NotNull(message = "O atributo 'status' precisa ser true ou false.")
-	private boolean status;
 
-	@NotNull(message = "O atributo 'dataCadastro' é obrigatório!")
-	@UpdateTimestamp
+	@CreationTimestamp
 	private LocalDate dataCadastro;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
@@ -112,13 +109,6 @@ public class Usuario {
 		this.cargo = cargo;
 	}
 
-	public boolean isStatus() {
-		return status;
-	}
-
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
 
 	public LocalDate getDataCadastro() {
 		return dataCadastro;

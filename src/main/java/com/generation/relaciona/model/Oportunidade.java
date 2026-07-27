@@ -3,6 +3,8 @@ package com.generation.relaciona.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.hibernate.annotations.UpdateTimestamp;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.Entity;
@@ -41,26 +43,19 @@ public class Oportunidade {
     
     @ManyToOne
     @JoinColumn(name = "cliente_id")
-    @JsonIgnoreProperties("oportunidade")
+    @JsonIgnoreProperties("oportunidades")
     private Cliente cliente;
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
-    @JsonIgnoreProperties("oportunidade")
+    @JsonIgnoreProperties("oportunidades")
     private Usuario usuario;
-
+    
+    
+    @UpdateTimestamp
     private LocalDate dataCriacao;
 
     //private LocalDate dataFechamento;
-
-    //Constructor
-    public Oportunidade(Long id, String titulo, String status, BigDecimal valor) {
-        this.id = id;
-        this.titulo = titulo;
-        this.status = status;
-        this.valor = valor;
-        this.dataCriacao = LocalDate.now();
-    }
 
     public LocalDate getDataCriacao() {
         return dataCriacao;
@@ -68,11 +63,6 @@ public class Oportunidade {
 
     public void setDataCriacao(LocalDate dataCriacao) {
         this.dataCriacao = dataCriacao;
-    }
-
-
-    //Constructor vazio
-    public Oportunidade() {
     }
 
     //Getters e Setters
@@ -107,6 +97,22 @@ public class Oportunidade {
     public void setStatus(String status) {
         this.status = status;
     }
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 
 }

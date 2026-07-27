@@ -18,56 +18,69 @@ import java.util.Optional;
 
 public class OportunidadeController {
 
-    @Autowired
-    private OportunidadeRepository oportunidadeRepository;
+	@Autowired
+	private OportunidadeRepository oportunidadeRepository;
 
-    //BUSCA TODOS
-    @GetMapping
-    public ResponseEntity<List<Oportunidade>> getAll(){
-        return ResponseEntity.ok(oportunidadeRepository.findAll());
-    }
+	// BUSCA TODOS
+	@GetMapping
+	public ResponseEntity<List<Oportunidade>> getAll() {
+		return ResponseEntity.ok(oportunidadeRepository.findAll());
+	}
 
-    //BUSCA POR ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Oportunidade> getById(@PathVariable long id){
-        Optional<Oportunidade> cliente = oportunidadeRepository.findById (id);
-        if (cliente.isEmpty ())
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        return ResponseEntity.ok (cliente.get());
-    }
+	// BUSCA POR ID
+	@GetMapping("/{id}")
+	public ResponseEntity<Oportunidade> getById(@PathVariable long id) {
+		Optional<Oportunidade> oportunidade = oportunidadeRepository.findById(id);
+		if (oportunidade.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		return ResponseEntity.ok(oportunidade.get());
+	}
 
-    //BUSCA POR NOME
-    @GetMapping("/titulo/{titulo}")
-    public ResponseEntity<List<Oportunidade>> getAllByNome (@PathVariable String titulo){
-        return ResponseEntity.ok (oportunidadeRepository.findByTituloContainingIgnoreCase (titulo));
-    }
+	// BUSCA POR NOME
+	@GetMapping("/titulo/{titulo}")
+	public ResponseEntity<List<Oportunidade>> getAllByTitulo(@PathVariable String titulo) {
+		return ResponseEntity.ok(oportunidadeRepository.findByTituloContainingIgnoreCase(titulo));
+	}
 
-    //POST = INSERT
-    @PostMapping
-    public ResponseEntity<Oportunidade> post(@Valid @RequestBody Oportunidade oportunidade){
-        return ResponseEntity.status (HttpStatus.CREATED)
-                .body(oportunidadeRepository.save(oportunidade));
-    }
+	// POST = INSERT
+	@PostMapping
+	public ResponseEntity<Oportunidade> post(@Valid @RequestBody Oportunidade oportunidade) {
+		return ResponseEntity.status(HttpStatus.CREATED).body(oportunidadeRepository.save(oportunidade));
+	}
 
-    //PUT = UPDATE
-    @PutMapping
-    public ResponseEntity<Oportunidade>put(@Valid @RequestBody Oportunidade oportunidade){
-        if (oportunidadeRepository.existsById (oportunidade.getId ()))
-            return ResponseEntity.ok (oportunidadeRepository.save (oportunidade));
-        return ResponseEntity.notFound ().build ();
-    }
+	// PUT = UPDATE
+	@PutMapping
+	public ResponseEntity<Oportunidade> put(@Valid @RequestBody Oportunidade oportunidade) {
+		if (oportunidadeRepository.existsById(oportunidade.getId())) {
+			return ResponseEntity.ok(oportunidadeRepository.save(oportunidade));
+		}
+		return ResponseEntity.notFound().build();
+	}
 
+	@PutMapping("/{id}/status")
+	public ResponseEntity<Oportunidade> atualizarStatus(@PathVariable Long id,
+			@RequestBody Oportunidade oportunidadeAtualizada) {
 
-    //DELETE
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id){
-        Optional<Oportunidade> oportunidade = oportunidadeRepository.findById (id);
-        if (oportunidade.isEmpty ())
-            throw new ResponseStatusException (HttpStatus.NOT_FOUND);
-        oportunidadeRepository.deleteById (id);
-    }
+		Optional<Oportunidade> oportunidade = oportunidadeRepository.findById(id);
 
+		if (oportunidade.isEmpty()) {
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Oportunidade não encontrada!");
+		}
+		Oportunidade oportunidadeExistente = oportunidade.get();
 
+		oportunidadeExistente.setStatus(oportunidadeAtualizada.getStatus());
+
+		return ResponseEntity.ok(oportunidadeRepository.save(oportunidadeExistente));
+	}
+
+	// DELETE
+	@ResponseStatus(HttpStatus.NO_CONTENT)
+	@DeleteMapping("/{id}")
+	public void delete(@PathVariable Long id) {
+		Optional<Oportunidade> oportunidade = oportunidadeRepository.findById(id);
+		if (oportunidade.isEmpty())
+			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		oportunidadeRepository.deleteById(id);
+	}
 
 }
