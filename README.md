@@ -108,11 +108,7 @@ A seguir estão as tabelas utilizadas no sistema.
 
 ## 📈 Diagrama Entidade-Relacionamento
 
-*Adicionar imagem do DER aqui.*
-
-```markdown
-![Tabela Cliente][Tabela Oportunidade][Tabela Usuario](https://cdn.discordapp.com/attachments/1509621329492447330/1530267678608986112/modeloPI2_2.png)
-```
+![Diagrama Arquitetural](https://raw.githubusercontent.com/OctaDev1/Docs/main/Diagrama%20-%20Projeto%20Integrador%202.png)
 
 ---
 
