@@ -4,7 +4,7 @@ Sistema de Gestão de Relacionamento com Clientes (CRM) desenvolvido com **Java 
 
 ---
 
-## 📋 Sobre o Projeto
+## 📋 Sobre o Projeto 
 
 O **Relaciona** é uma aplicação de CRM (Customer Relationship Management) desenvolvida para auxiliar empresas no gerenciamento de clientes e oportunidades de negócio.
 
