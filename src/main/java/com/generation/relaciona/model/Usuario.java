@@ -7,6 +7,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +32,7 @@ public class Usuario {
 	@Column(length = 255)
 	private String nome;
 
+	@Schema(example = "email@email.com.br")
 	@NotBlank(message = "O atributo 'email' é obrigatório!")
 	@Email(message = "O atributo 'email' deve ser um email válido!")
 	@Size(min = 10, max = 255, message = "O email deve ter entre 10 e 255 caracteres.")
@@ -58,6 +60,7 @@ public class Usuario {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario", cascade = CascadeType.REMOVE)
 
 	@JsonIgnoreProperties(value = "usuario", allowSetters = true)
+	@Schema(hidden = true)
 	private List<Oportunidade> oportunidades;
 
 	public Long getId() {

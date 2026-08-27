@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.br.CPF;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -71,6 +72,7 @@ public class Cliente {
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "cliente", cascade = CascadeType.REMOVE)
 
 	@JsonIgnoreProperties(value = "clientes", allowSetters = true)
+	@Schema(hidden = true)
 	private List<Oportunidade> oportunidades;
 
 	public Long getId() {
